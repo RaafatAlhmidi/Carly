@@ -51,9 +51,8 @@ android {
 dependencies {
 
     // Dagger + Hilt
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
-    kapt(libs.hilt.compiler)
+    implementation(libs.hilt.android.v244)
+    kapt(libs.hilt.android.compiler.v244)
 
     // navigation
     implementation(libs.androidx.navigation.compose)
@@ -78,4 +77,9 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }
