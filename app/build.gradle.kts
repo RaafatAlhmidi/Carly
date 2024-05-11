@@ -50,9 +50,12 @@ android {
 
 dependencies {
 
+    implementation(project(":data"))
+
     // Dagger + Hilt
-    implementation(libs.hilt.android.v244)
-    kapt(libs.hilt.android.compiler.v244)
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
+    kapt(libs.hilt.android.compiler)
 
     // navigation
     implementation(libs.androidx.navigation.compose)

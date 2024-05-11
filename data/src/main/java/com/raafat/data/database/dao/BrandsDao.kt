@@ -4,9 +4,10 @@ import androidx.room.Dao
 import androidx.room.Query
 import com.raafat.data.database.Constants
 import com.raafat.data.database.entities.BrandEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BrandsDao {
     @Query("SELECT * FROM ${Constants.BRAND_TABLE}")
-    fun getAll(): List<BrandEntity>
+    fun getAll(): Flow<List<BrandEntity>>
 }
