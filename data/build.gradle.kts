@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-kapt")
+
 }
 
 android {
@@ -30,6 +32,15 @@ android {
 }
 
 dependencies {
+
+    // Dagger + Hilt
+    implementation(libs.hilt.android.v244)
+    kapt(libs.hilt.android.compiler.v244)
+    
+    // room database
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+    kapt(libs.androidx.room.compiler)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
