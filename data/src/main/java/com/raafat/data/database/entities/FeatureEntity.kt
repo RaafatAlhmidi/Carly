@@ -7,9 +7,7 @@ import com.raafat.data.database.Constants
 
 @Entity(tableName = Constants.FEATURE_TABLE)
 data class FeatureEntity(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = Constants.FEATURE_ID_COLUMN)
-    val id: Int,
+    @PrimaryKey
     @ColumnInfo(name = Constants.FEATURE_NAME_COLUMN)
     val name: String
 )

@@ -51,7 +51,7 @@ fun DashboardScreen(
                     contentDescription = null
                 )
 
-                Text(text = brands.joinToString { "${it.id}:${it.name}" })
+                Text(text = brands.joinToString { it.name })
                 Box(modifier = Modifier.fillMaxSize()) {
                     Image(
                         painter = painterResource(id = R.drawable.ic_add),

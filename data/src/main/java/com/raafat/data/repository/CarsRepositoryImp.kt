@@ -20,7 +20,7 @@ class CarsRepositoryImp @Inject constructor(
 
     override fun getBrands(): Flow<List<Brand>> {
         return brandsDao.getAll().map { it.map { entity ->
-            Brand(entity.id, entity.name)
+            Brand(entity.name)
         } }
     }
 }

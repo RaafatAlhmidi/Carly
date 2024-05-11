@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
-    private val carsRepository: CarsRepository
+    carsRepository: CarsRepository
 ) : ViewModel() {
 
     private val _brands = carsRepository.getBrands()
