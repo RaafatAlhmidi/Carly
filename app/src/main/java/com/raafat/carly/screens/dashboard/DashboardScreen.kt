@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -41,7 +42,7 @@ fun DashboardScreen(
                         contentScale = ContentScale.FillBounds
                     )
             ) {
-
+                
                 Icon(
                     modifier = Modifier
                         .size(130.dp)
@@ -49,6 +50,8 @@ fun DashboardScreen(
                     painter = painterResource(id = R.drawable.carly_logo),
                     contentDescription = null
                 )
+                
+                Text(text = brands.firstOrNull()?.series?.firstOrNull()?.features?.joinToString { it.name } ?: "")
 
                 Box(modifier = Modifier.fillMaxSize()) {
                     Image(

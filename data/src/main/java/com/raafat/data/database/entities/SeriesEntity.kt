@@ -17,6 +17,6 @@ data class SeriesEntity(
     @ColumnInfo(name = Constants.SERIES_MAXIMUM_YEAR_COLUMN)
     val maximumYear: Int,
 
-    @ColumnInfo(name = Constants.BRAND_NAME_COLUMN)
-    val brandName:Int
+    @ColumnInfo(name = Constants.BRAND_ID_COLUMN)
+    val brandId:Int
 )

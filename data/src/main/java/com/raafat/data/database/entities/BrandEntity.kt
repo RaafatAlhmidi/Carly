@@ -7,7 +7,10 @@ import com.raafat.data.database.Constants
 
 @Entity(tableName = Constants.BRAND_TABLE)
 data class BrandEntity(
-    @PrimaryKey()
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = Constants.BRAND_ID_COLUMN)
+    val id: Int,
+
     @ColumnInfo(name = Constants.BRAND_NAME_COLUMN)
     val name: String
 )

@@ -10,7 +10,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -25,10 +24,12 @@ class CarsRepositoryImp @Inject constructor(
     override fun getBrands(): Flow<List<Brand>> {
         return brandsDao.getAll().map {
             it.map { entity ->
-                withContext(dispatcher){
-                   entity.mapToModel(seriesDao.getAllForBrand(entity.name))
-                }
+                entity.mapToModel()
             }
         }
+    }
+
+    override fun getSelectedCar(): Flow<Brand?> {
+        TODO("Not yet implemented")
     }
 }

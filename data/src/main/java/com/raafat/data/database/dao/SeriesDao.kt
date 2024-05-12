@@ -12,7 +12,7 @@ interface SeriesDao {
     @Query("SELECT * FROM ${Constants.SERIES_TABLE}")
     fun getAll(): List<SeriesEntity>
 
-    @Query("SELECT * FROM ${Constants.SERIES_TABLE} WHERE ${Constants.BRAND_NAME_COLUMN} = :brandName")
-    fun getAllForBrand(brandName: String): List<SeriesEntity>
+    @Query("SELECT * FROM ${Constants.SERIES_TABLE} WHERE ${Constants.BRAND_ID_COLUMN} = :brandId")
+    fun getAllForBrand(brandId: Int): List<SeriesEntity>
 
 }
