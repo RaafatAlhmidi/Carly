@@ -2,7 +2,7 @@ package com.raafat.carly.screens.dashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.raafat.data.repository.CarsRepository
+import com.raafat.data.repository.brands.CarsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn

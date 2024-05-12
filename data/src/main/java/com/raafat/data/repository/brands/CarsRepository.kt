@@ -1,4 +1,4 @@
-package com.raafat.data.repository
+package com.raafat.data.repository.brands
 
 import com.raafat.data.model.Brand
 import kotlinx.coroutines.flow.Flow

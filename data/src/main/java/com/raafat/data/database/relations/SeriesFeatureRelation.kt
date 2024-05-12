@@ -6,6 +6,7 @@ import androidx.room.Entity
 import androidx.room.Junction
 import androidx.room.Relation
 import com.raafat.data.database.Constants
+import com.raafat.data.database.entities.BrandEntity
 import com.raafat.data.database.entities.FeatureEntity
 import com.raafat.data.database.entities.SeriesEntity
 
@@ -30,5 +31,16 @@ data class SeriesWithFeatureRelation(
         associateBy = Junction(SeriesAndFeatureCrossRef::class)
     )
     val features: List<FeatureEntity>
+)
+
+data class BrandWithSeriesAndFeatureRelation(
+    @Embedded
+    val brand: BrandEntity,
+    @Relation(
+        entity = BrandEntity::class,
+        parentColumn = Constants.BRAND_NAME_COLUMN,
+        entityColumn = Constants.BRAND_NAME_COLUMN
+    )
+    val series: List<SeriesEntity>
 )
 

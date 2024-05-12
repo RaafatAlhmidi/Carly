@@ -10,8 +10,9 @@ import com.raafat.data.R
 import com.raafat.data.database.AppDatabase
 import com.raafat.data.database.Constants
 import com.raafat.data.database.dao.BrandsDao
-import com.raafat.data.repository.CarsRepository
-import com.raafat.data.repository.CarsRepositoryImp
+import com.raafat.data.database.dao.SeriesDao
+import com.raafat.data.repository.brands.CarsRepository
+import com.raafat.data.repository.brands.CarsRepositoryImp
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -118,4 +119,7 @@ object DatabaseModule {
 
     @Provides
     fun provideBrandsDao(database: AppDatabase): BrandsDao = database.brandsDao()
+    @Provides
+    fun provideCarsDao(database: AppDatabase): SeriesDao = database.seriesDao()
+
 }
