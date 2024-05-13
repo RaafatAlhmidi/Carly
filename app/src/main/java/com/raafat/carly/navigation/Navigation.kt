@@ -19,7 +19,10 @@ sealed class Screen(val route: String) {
 
 class NavActions(private val navigator: ScreenNavigator) {
     fun goToUserCars() = navigator.navigate(Screen.CarSelection)
-    fun goToCarCreation() = navigator.navigate(Screen.CarCreation)
+    fun goToCarCreation() = navigator.navigate(Screen.CarCreation, navOptions = navOptions {
+        popUpTo(Dashboard.route) { inclusive = false }
+    })
+
     fun goToDashboard() = navigator.navigate(Dashboard, navOptions = navOptions {
         popUpTo(Dashboard.route) { inclusive = true }
     })

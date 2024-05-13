@@ -43,7 +43,8 @@ import com.raafat.data.model.Car
 @Composable
 fun CarListScreen(
     viewModel: CarListViewModel = hiltViewModel(),
-    goBack: () -> Unit
+    goBack: () -> Unit,
+    toCarCreation: () -> Unit
 ) {
     BackHandler {
         goBack()
@@ -91,6 +92,7 @@ fun CarListScreen(
                             .padding(horizontal = 10.dp, vertical = 5.dp)
                             .clickable {
                                 viewModel.selectCar(car)
+                                goBack()
                             }, car = car
                     ) {
                         viewModel.deleteCar(it)
@@ -105,7 +107,7 @@ fun CarListScreen(
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(50.dp))
                 .background(primaryColor),
-            onClick = { }) {
+            onClick = { toCarCreation() }) {
             CarlyLightText(text = "Add new car")
         }
     }

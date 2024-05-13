@@ -25,14 +25,17 @@ fun NavigationRoot() {
         ) { innerPadding ->
             NavHost(
                 modifier = Modifier.padding(innerPadding),
-                navController = navController, startDestination = Dashboard.route) {
+                navController = navController, startDestination = Dashboard.route
+            ) {
                 val navActions = NavActions(ScreenNavigator(navController))
-                addScreen(Dashboard) { DashboardScreen(
-                    goToCarSelection = navActions::goToUserCars,
-                    goToCarCreation = navActions::goToCarCreation
-                ) }
-                addScreen(CarCreation){ CarCreationScreen(goBack = navActions::pop, goToCarsList = navActions::goToUserCars) }
-                addScreen(CarSelection){ CarListScreen(goBack = navActions::goToDashboard)}
+                addScreen(Dashboard) {
+                    DashboardScreen(
+                        goToCarSelection = navActions::goToUserCars,
+                        goToCarCreation = navActions::goToCarCreation
+                    )
+                }
+                addScreen(CarCreation) { CarCreationScreen(goBack = navActions::pop, goToCarsList = navActions::goToUserCars) }
+                addScreen(CarSelection) { CarListScreen(goBack = navActions::goToDashboard, toCarCreation = navActions::goToCarCreation) }
             }
         }
     }
