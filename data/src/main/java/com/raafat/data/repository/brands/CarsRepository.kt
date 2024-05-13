@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface CarsRepository {
 
-    fun getBrands(): Flow<List<Brand>>
+    suspend fun getBrands(): List<Brand>
 
     fun getSelectedCar(): Flow<Brand?>
 }

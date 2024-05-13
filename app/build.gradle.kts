@@ -51,6 +51,7 @@ android {
 dependencies {
 
     implementation(project(":data"))
+    implementation(project(":domain"))
 
     // Dagger + Hilt
     implementation(libs.hilt.android)

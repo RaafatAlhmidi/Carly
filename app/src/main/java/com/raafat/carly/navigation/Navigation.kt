@@ -9,14 +9,14 @@ import androidx.navigation.compose.composable
 
 sealed class Screen(val route: String){
     data object Dashboard: Screen("dashboard")
-    data object CarsList: Screen("cars_list")
+    data object CarCreation: Screen("cars_creation")
     data object CarSelection: Screen("car_selection")
 }
 
 
 class NavActions(private val navigator: ScreenNavigator) {
-    fun goToList() = navigator.navigate(Screen.CarsList)
-    fun goToCarSelection() = navigator.navigate(Screen.CarSelection)
+    fun goToUserCars() = navigator.navigate(Screen.CarSelection)
+    fun goToCarCreation() = navigator.navigate(Screen.CarCreation)
     fun pop() = navigator.pop()
 }
 
