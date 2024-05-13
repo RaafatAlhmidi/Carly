@@ -1,6 +1,5 @@
 package com.raafat.carly.screens.carCreation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.raafat.data.di.DefaultDispatcher
@@ -8,6 +7,7 @@ import com.raafat.data.model.Brand
 import com.raafat.data.model.FuelType
 import com.raafat.data.model.Series
 import com.raafat.domain.services.carCreation.CarCreationService
+import com.raafat.domain.services.carSelection.CarSelectionService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,6 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CarCreationViewModel @Inject constructor(
     private val carCreationService: CarCreationService,
+    private val carSelectionService: CarSelectionService,
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
@@ -70,6 +71,7 @@ class CarCreationViewModel @Inject constructor(
                 currentState.selectedSeries,
                 carCreationService.loadYears(currentState.selectedSeries, null)
             )
+            is Finish -> null
         }
 
         _prevState.emit(previousState)
@@ -111,12 +113,14 @@ class CarCreationViewModel @Inject constructor(
     }
 
     fun selectFuelType(fuelType: FuelType) {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             val selectedBrand = (_uiState.value as? SelectFuelType)?.selectedBrand
             val selectedSeries = (_uiState.value as? SelectFuelType)?.selectedSeries
             val selectedYear = (_uiState.value as? SelectFuelType)?.selectedYear
-            val onGoingSelectionText = (_uiState.value as? SelectFuelType)?.onGoingSelectionText
-            Log.i("Raafat2", onGoingSelectionText ?: "null")
+            if (selectedBrand != null && selectedSeries != null && selectedYear != null) {
+                carSelectionService.createCar(selectedBrand, selectedSeries, selectedYear, fuelType)
+            }
+            _uiState.emit(Finish)
         }
     }
 
@@ -138,7 +142,9 @@ class CarCreationViewModel @Inject constructor(
             is SelectFuelType -> {
             }
 
+            is Finish -> {
 
+            }
         }
     }
 }
@@ -178,3 +184,4 @@ data class SelectFuelType(
     CarsSelectionUIState(
         onGoingSelectionText = "${selectedBrand?.name}, ${selectedSeries?.name}, $selectedYear"
     )
+data object Finish: CarsSelectionUIState()

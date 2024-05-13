@@ -8,8 +8,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.raafat.carly.navigation.Screen.CarCreation
+import com.raafat.carly.navigation.Screen.CarSelection
 import com.raafat.carly.navigation.Screen.Dashboard
 import com.raafat.carly.screens.carCreation.CarCreationScreen
+import com.raafat.carly.screens.carList.CarListScreen
 import com.raafat.carly.screens.dashboard.DashboardScreen
 import com.raafat.carly.ui.theme.CarlyTheme
 
@@ -29,7 +31,8 @@ fun NavigationRoot() {
                     goToCarSelection = navActions::goToCarCreation,
                     goToCarCreation = navActions::goToCarCreation
                 ) }
-                addScreen(CarCreation){ CarCreationScreen(goBack = navActions::pop) }
+                addScreen(CarCreation){ CarCreationScreen(goBack = navActions::pop, goToCarsList = navActions::goToUserCars) }
+                addScreen(CarSelection){ CarListScreen(goBack = navActions::goToDashboard)}
             }
         }
     }

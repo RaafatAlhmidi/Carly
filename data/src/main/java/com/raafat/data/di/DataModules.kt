@@ -11,6 +11,7 @@ import com.raafat.data.R
 import com.raafat.data.database.AppDatabase
 import com.raafat.data.database.Constants
 import com.raafat.data.database.dao.BrandsDao
+import com.raafat.data.database.dao.CarsDao
 import com.raafat.data.database.dao.FuelTypesDao
 import com.raafat.data.database.dao.SeriesDao
 import com.raafat.data.repository.brands.CarsRepository
@@ -242,6 +243,9 @@ object DatabaseModule {
     fun providerFuelTypeDao(database: AppDatabase): FuelTypesDao = database.fuelTypeDao()
 
     @Provides
-    fun provideCarsDao(database: AppDatabase): SeriesDao = database.seriesDao()
+    fun provideSeriesDao(database: AppDatabase): SeriesDao = database.seriesDao()
+
+    @Provides
+    fun provideCarsDao(database: AppDatabase): CarsDao = database.carsDao()
 
 }

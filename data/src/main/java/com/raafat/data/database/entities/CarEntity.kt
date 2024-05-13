@@ -11,15 +11,18 @@ data class CarEntity(
     @ColumnInfo(name = Constants.CAR_ID_COLUMN)
     val id: Int?,
 
-    @ColumnInfo(name = Constants.BRAND_NAME_COLUMN)
-    val brandName: String,
+    @ColumnInfo(name = Constants.BRAND_ID_COLUMN)
+    val brandId: Int,
 
-    @ColumnInfo(name = Constants.SERIES_NAME_COLUMN)
-    val seriesName: String,
+    @ColumnInfo(name = Constants.SERIES_ID_COLUMN)
+    val seriesId: Int,
 
     @ColumnInfo(name = Constants.CAR_YEAR_COLUMN)
-    val year: String,
+    val year: Int,
 
-    @ColumnInfo(name = Constants.FUEL_TYPE_NAME_COLUMN)
-    val fuelType: String
+    @ColumnInfo(name = Constants.FUEL_ID_COLUMN)
+    val fuelType: Int,
+
+    @ColumnInfo(name = Constants.CAR_IS_SELECTED_COLUMN)
+    val isSelected: Boolean
 )

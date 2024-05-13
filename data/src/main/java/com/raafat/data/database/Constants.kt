@@ -21,6 +21,7 @@ data object Constants{
     const val CAR_TABLE = "cars"
     const val CAR_YEAR_COLUMN = "car_year"
     const val CAR_ID_COLUMN = "car_id"
+    const val CAR_IS_SELECTED_COLUMN = "car_is_selected"
 
 
     const val FUEL_TYPE_TABLE = "fuel_types"

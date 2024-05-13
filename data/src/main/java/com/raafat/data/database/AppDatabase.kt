@@ -3,6 +3,7 @@ package com.raafat.data.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.raafat.data.database.dao.BrandsDao
+import com.raafat.data.database.dao.CarsDao
 import com.raafat.data.database.dao.FuelTypesDao
 import com.raafat.data.database.dao.SeriesDao
 import com.raafat.data.database.entities.BrandEntity
@@ -29,4 +30,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun brandsDao(): BrandsDao
     abstract fun seriesDao(): SeriesDao
     abstract fun fuelTypeDao(): FuelTypesDao
+    abstract fun carsDao(): CarsDao
 }

@@ -44,7 +44,8 @@ import com.raafat.data.model.Series
 @Composable
 fun CarCreationScreen(
     viewmodel: CarCreationViewModel = hiltViewModel(),
-    goBack: () -> Unit
+    goBack: () -> Unit,
+    goToCarsList: () -> Unit
 ) {
     BackHandler {
         if (viewmodel.prevState())
@@ -52,6 +53,9 @@ fun CarCreationScreen(
     }
 
     val uiState by viewmodel.uiState.collectAsState()
+
+    if (uiState is Finish)
+        goToCarsList()
 
     Column(
         modifier = Modifier
@@ -86,7 +90,9 @@ fun CarCreationScreen(
             uiState.onGoingSelectionText?.let {
                 CarlyPrimaryText(
                     text = it,
-                    modifier = Modifier.animateContentSize().padding(vertical = 5.dp, horizontal = 10.dp),
+                    modifier = Modifier
+                        .animateContentSize()
+                        .padding(vertical = 5.dp, horizontal = 10.dp),
                     textSize = 14.sp
                 )
             }
@@ -102,6 +108,7 @@ fun CarCreationScreen(
                 is SelectSeries -> (uiState as SelectSeries).items
                 is SelectYear -> (uiState as SelectYear).items
                 is SelectFuelType -> (uiState as SelectFuelType).items
+                else -> emptyList()
             }
 
             items(items.size, key = { items[it].hashCode() }) { index ->
@@ -153,6 +160,7 @@ fun CarCreationScreen(
                             text = (item as FuelType).name
                         )
                     }
+                    else -> {}
                 }
 
                 if (index < items.size - 1)
