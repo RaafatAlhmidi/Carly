@@ -13,10 +13,11 @@ data class CarRelations(
     val car: CarEntity,
 
     @Relation(
+        entity = SeriesEntity::class,
         parentColumn = Constants.SERIES_ID_COLUMN,
         entityColumn = Constants.SERIES_ID_COLUMN
     )
-    val series: SeriesEntity,
+    val series: SeriesWithFeaturesAndFuelsRelation,
 
     @Relation(
         parentColumn = Constants.FUEL_ID_COLUMN,

@@ -28,7 +28,7 @@ fun NavigationRoot() {
                 navController = navController, startDestination = Dashboard.route) {
                 val navActions = NavActions(ScreenNavigator(navController))
                 addScreen(Dashboard) { DashboardScreen(
-                    goToCarSelection = navActions::goToCarCreation,
+                    goToCarSelection = navActions::goToUserCars,
                     goToCarCreation = navActions::goToCarCreation
                 ) }
                 addScreen(CarCreation){ CarCreationScreen(goBack = navActions::pop, goToCarsList = navActions::goToUserCars) }

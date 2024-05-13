@@ -7,4 +7,9 @@ data class Car(
     val year: Int,
     val fuelType: FuelType,
     val isSelected: Boolean
-)
+){
+    val title: String
+        get() = "${brand.name} - ${series.name}"
+    val subTitle: String
+        get() = "$year - ${fuelType.name}"
+}

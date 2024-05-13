@@ -1,14 +1,12 @@
 package com.raafat.carly.screens.dashboard
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
@@ -26,6 +24,7 @@ fun DashboardScreen(
     goToCarSelection: () -> Unit
 ) {
 
+    val uiState by viewModel.uiState.collectAsState()
 
     Column(
         modifier = Modifier
@@ -43,19 +42,14 @@ fun DashboardScreen(
             painter = painterResource(id = R.drawable.carly_logo),
             contentDescription = null
         )
+        DashboardUi(
+            modifier = Modifier.fillMaxSize(),
+            uiState = uiState,
+            goToCarCreation = goToCarCreation,
+            goToCarSelection = goToCarSelection
+        )
 
-        Box(modifier = Modifier.fillMaxSize()) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_add),
-                contentDescription = null,
-                modifier = Modifier
-                    .padding(20.dp)
-                    .size(120.dp)
-                    .align(Alignment.Center)
-                    .clickable {
-                        goToCarCreation()
-                    }
-            )
-        }
+
     }
 }
+
