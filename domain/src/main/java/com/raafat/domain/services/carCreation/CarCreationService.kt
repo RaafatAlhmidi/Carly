@@ -8,9 +8,9 @@ interface CarCreationService {
 
     suspend fun loadBrands(query: String?): List<Brand>
 
-    fun loadSeries(brand: Brand, query: String?): List<Series>
+    suspend fun loadSeries(brand: Brand?, query: String?): List<Series>
 
-    fun loadYears(series: Series, query: String?): List<Int>
+    fun loadYears(series: Series?, query: String?): List<Int>
 
-    fun loadFuelTypes(series: Series, query: String?): List<FuelType>
+    suspend fun loadFuelTypes(series: Series?, query: String?): List<FuelType>
 }

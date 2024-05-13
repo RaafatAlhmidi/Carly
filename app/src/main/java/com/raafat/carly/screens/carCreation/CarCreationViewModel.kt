@@ -35,21 +35,12 @@ class CarCreationViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            _currentState.collect{
+            _currentState.collect {
                 _uiState.emit(it)
             }
         }
     }
 
-
-    fun nextState() {
-        viewModelScope.launch {
-            val nextState = _nextState.value
-            if (nextState != null) {
-                _currentState.emit(nextState)
-            }
-        }
-    }
 
     /**
      * @return true if there is a no previous state, which indicate to navigate back to the previous screen
@@ -62,9 +53,26 @@ class CarCreationViewModel @Inject constructor(
                 _nextState.emit(nextState)
                 _currentState.emit(prevState)
             }
+            setPreviousState()
         }
 
         return prevState == null
+    }
+
+    private suspend fun setPreviousState() {
+
+        val previousState = when (val currentState = _currentState.value) {
+            is SelectBrands -> null
+            is SelectSeries -> SelectBrands(carCreationService.loadBrands(null))
+            is SelectYear -> SelectSeries(currentState.selectedBrand, carCreationService.loadSeries(currentState.selectedBrand, null))
+            is SelectFuelType -> SelectYear(
+                currentState.selectedBrand,
+                currentState.selectedSeries,
+                carCreationService.loadYears(currentState.selectedSeries, null)
+            )
+        }
+
+        _prevState.emit(previousState)
     }
 
     fun selectBrand(brand: Brand) {

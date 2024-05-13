@@ -23,18 +23,18 @@ class CarCreationServiceImpl @Inject constructor(
         }
     }
 
-    override fun loadSeries(brand: Brand, query: String?): List<Series> {
-        return brand.series.filter { series -> series.name.contains(query ?: "", ignoreCase = true) }
+    override suspend fun loadSeries(brand: Brand?, query: String?): List<Series> {
+        return brand?.series?.filter { series -> series.name.contains(query ?: "", ignoreCase = true) } ?: carRepository.getSeries()
     }
 
-    override fun loadYears(series: Series, query: String?): List<Int> {
-        return (series.minimumYear..series.maximumYear)
+    override fun loadYears(series: Series?, query: String?): List<Int> {
+        return ((series?.minimumYear ?: 1990)..(series?.maximumYear ?: 2024))
             .filter { year -> year.toString().contains(query ?: "", ignoreCase = true) }
     }
 
-    override fun loadFuelTypes(series: Series, query: String?): List<FuelType> {
-        return series.fuelTypes.filter { fuelType ->
+    override suspend fun loadFuelTypes(series: Series?, query: String?): List<FuelType> {
+        return series?.fuelTypes?.filter { fuelType ->
             fuelType.name.contains(query ?: "", ignoreCase = true)
-        }
+        } ?: carRepository.getFuelTypes()
     }
 }

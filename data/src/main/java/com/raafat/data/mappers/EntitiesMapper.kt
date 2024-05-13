@@ -2,6 +2,7 @@ package com.raafat.data.mappers
 
 import com.raafat.data.database.entities.FeatureEntity
 import com.raafat.data.database.entities.FuelTypeEntity
+import com.raafat.data.database.entities.SeriesEntity
 import com.raafat.data.database.relations.BrandWithSeriesAndFeatureRelation
 import com.raafat.data.database.relations.SeriesWithFeaturesAndFuelsRelation
 import com.raafat.data.model.Brand
@@ -22,6 +23,15 @@ fun SeriesWithFeaturesAndFuelsRelation.mapToModel(): Series = Series(
     minimumYear = this.series.minimumYear,
     features = this.features.map { it.mapToModel() },
     fuelTypes = this.fuels.map { it.mapToModel() }
+)
+
+fun SeriesEntity.mapToModel(): Series = Series(
+    id = this.id,
+    name = this.name,
+    maximumYear = this.maximumYear,
+    minimumYear = this.minimumYear,
+    features = emptyList(),
+    fuelTypes = emptyList()
 )
 
 fun FeatureEntity.mapToModel(): Feature = Feature(
