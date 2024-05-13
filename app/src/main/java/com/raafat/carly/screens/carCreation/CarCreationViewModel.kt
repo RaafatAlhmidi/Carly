@@ -71,6 +71,7 @@ class CarCreationViewModel @Inject constructor(
                 currentState.selectedSeries,
                 carCreationService.loadYears(currentState.selectedSeries, null)
             )
+
             is Finish -> null
         }
 
@@ -125,25 +126,38 @@ class CarCreationViewModel @Inject constructor(
     }
 
     fun filter(query: String) {
-        val currentState = _uiState.value
-        when (currentState) {
-            is SelectBrands -> {
+        viewModelScope.launch(dispatcher) {
+            when (val currentState = _uiState.value) {
+                is SelectBrands -> {
+                    val brands = carCreationService.loadBrands(query)
+                    _currentState.emit(SelectBrands(brands))
+                }
 
-            }
+                is SelectSeries -> {
+                    val currentBrand = currentState.selectedBrand
+                    val series = carCreationService.loadSeries(currentBrand, query)
+                    _currentState.emit(SelectSeries(currentBrand, series))
+                }
 
-            is SelectSeries -> {
+                is SelectYear -> {
+                    val currentBrand = currentState.selectedBrand
+                    val currentSeries = currentState.selectedSeries
+                    val years = carCreationService.loadYears(currentSeries, query)
+                    _currentState.emit(SelectYear(currentBrand, currentSeries, years))
 
-            }
+                }
 
-            is SelectYear -> {
+                is SelectFuelType -> {
+                    val currentBrand = currentState.selectedBrand
+                    val currentSeries = currentState.selectedSeries
+                    val currentYear = currentState.selectedYear
+                    val fuelTypes = carCreationService.loadFuelTypes(currentSeries, query)
+                    _currentState.emit(SelectFuelType(currentBrand, currentSeries, currentYear, fuelTypes))
+                }
 
-            }
+                is Finish -> {
 
-            is SelectFuelType -> {
-            }
-
-            is Finish -> {
-
+                }
             }
         }
     }
@@ -184,4 +198,5 @@ data class SelectFuelType(
     CarsSelectionUIState(
         onGoingSelectionText = "${selectedBrand?.name}, ${selectedSeries?.name}, $selectedYear"
     )
-data object Finish: CarsSelectionUIState()
+
+data object Finish : CarsSelectionUIState()

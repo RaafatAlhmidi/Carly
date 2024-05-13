@@ -18,15 +18,24 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,7 +49,7 @@ import com.raafat.data.model.Brand
 import com.raafat.data.model.FuelType
 import com.raafat.data.model.Series
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun CarCreationScreen(
     viewmodel: CarCreationViewModel = hiltViewModel(),
@@ -51,12 +60,20 @@ fun CarCreationScreen(
         if (viewmodel.prevState())
             goBack()
     }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     val uiState by viewmodel.uiState.collectAsState()
+    var searchTextFieldValue by remember {
+        mutableStateOf(TextFieldValue(text = ""))
+    }
 
     if (uiState is Finish)
         goToCarsList()
 
+    val onItemSelected: () -> Unit = {
+        keyboardController?.hide()
+        searchTextFieldValue = TextFieldValue("")
+    }
     Column(
         modifier = Modifier
             .background(backgroundLight)
@@ -85,6 +102,27 @@ fun CarCreationScreen(
 
             CarlyLightText(text = "Car Selection", textSize = 18.sp, modifier = Modifier.weight(1f), textAlign = TextAlign.Center)
         }
+
+        OutlinedTextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 5.dp, start = 10.dp, end = 10.dp, top = 10.dp),
+            value = searchTextFieldValue,
+            onValueChange = { newTextFieldValue ->
+                searchTextFieldValue = newTextFieldValue
+                if (newTextFieldValue.text.isNotBlank())
+                    viewmodel.filter(newTextFieldValue.text)
+            },
+            colors =
+            OutlinedTextFieldDefaults.colors(
+
+            ),
+            maxLines = 1,
+            trailingIcon = {
+                Icon(imageVector = Icons.Default.Search, contentDescription = null)
+            },
+            placeholder = { CarlyDarkText(text = "Search ...") }
+        )
 
         AnimatedVisibility(visible = uiState.onGoingSelectionText != null) {
             uiState.onGoingSelectionText?.let {
@@ -120,6 +158,7 @@ fun CarCreationScreen(
                             modifier = Modifier
                                 .padding(vertical = 8.dp)
                                 .clickable {
+                                    onItemSelected()
                                     viewmodel.selectBrand(item as Brand)
                                 },
                             text = (item as Brand).name
@@ -132,6 +171,7 @@ fun CarCreationScreen(
                                 .padding(vertical = 8.dp)
                                 .animateItemPlacement()
                                 .clickable {
+                                    onItemSelected()
                                     viewmodel.selectSeries(item as Series)
                                 },
                             text = (item as Series).name
@@ -144,6 +184,7 @@ fun CarCreationScreen(
                                 .padding(vertical = 8.dp)
                                 .animateItemPlacement()
                                 .clickable {
+                                    onItemSelected()
                                     viewmodel.selectYear(item as Int)
                                 },
                             text = (item as Int).toString()
@@ -155,11 +196,13 @@ fun CarCreationScreen(
                             modifier = Modifier
                                 .padding(vertical = 8.dp)
                                 .clickable {
+                                    onItemSelected()
                                     viewmodel.selectFuelType(item as FuelType)
                                 },
                             text = (item as FuelType).name
                         )
                     }
+
                     else -> {}
                 }
 
