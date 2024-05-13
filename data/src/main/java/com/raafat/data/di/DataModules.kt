@@ -179,7 +179,7 @@ object DatabaseModule {
 
             var brandId = getBrandId(db, brand)
             if (brandId == -1)
-                insertBrand(db, brand)
+                brandId = insertBrand(db, brand)
 
             val seriesId = insertSeries(db = db, series = series, from = from.toInt(), to = to.toInt(), brandId = brandId)
 
