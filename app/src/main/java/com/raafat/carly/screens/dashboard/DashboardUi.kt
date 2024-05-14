@@ -102,7 +102,7 @@ private fun Content(
         }
 
 
-        Column(modifier = Modifier.weight(1f)) {
+        Column(modifier = Modifier) {
 
             CarlyLightText(text = "Discover your car", textSize = 20.sp)
             Column(
